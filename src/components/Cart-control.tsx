@@ -1,4 +1,4 @@
-import { useLocalStorage } from "@/Hooks/useLocalStorage";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { CartIcon } from "./Cart-icon";
 import { styled } from 'styled-components';
 
