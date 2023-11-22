@@ -3,6 +3,7 @@
 'use client'
 
 import styled from "styled-components"
+import { formatPrice } from "@/utils/format-price"
 
 interface ProductsCardProps {
   image: string,
@@ -11,10 +12,6 @@ interface ProductsCardProps {
 }
 
 const Card = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
   background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(10px);
   border-radius: 0px  0px 4px 4px;
@@ -38,23 +35,36 @@ const Card = styled.div`
     color: var(--shapes-dark);
   }
 
-  > div {
-    width: 228px;
-    height: 1px;
-    height: 1px;
-    top: 340px;
-    margin: 8px 0;
-    background: var(--shapes);
+  div {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction: column;
+    padding: 8px 0;
+    
+    > div {
+      width: 228px;
+      height: 1px;
+      height: 1px;
+      top: 340px;
+      margin: 8px 0;
+      padding: 0px;
+      background: var(--shapes);
+    }
   }
 `
 
 export function ProductCard(props : ProductsCardProps){
+  const price = formatPrice(props.price)
+  
   return(
     <Card>
       <img src={props.image} />
-      <h3>{props.title}</h3>
-      <div></div>
-      <p>{props.price}</p>
+      <div>
+        <h3>{props.title}</h3>
+        <div></div>
+        <p>{price}</p>
+      </div>
     </Card>
   )
 }
