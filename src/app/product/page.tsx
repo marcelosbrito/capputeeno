@@ -26,7 +26,6 @@ const Container = styled.div`
 
     img {
       max-width: 640px;
-      width: 50%;
     }
 
     > div {
