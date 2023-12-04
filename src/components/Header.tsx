@@ -2,7 +2,7 @@
 import styled from "styled-components"
 import { Saira_Stencil_One } from 'next/font/google'
 import { PrimaryInputWSearchIcon } from "./Primary-input"
-import { CartControl } from "./Cart-control"
+import { CartControl } from "./cart/Cart-control"
 import { useFilter } from "@/hooks/useFilter"
 
 const sairaStencil = Saira_Stencil_One({ 
