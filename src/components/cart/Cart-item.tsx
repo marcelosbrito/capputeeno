@@ -1,12 +1,16 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 "use client"
 import { ProductInCart } from "@/types/product";
 import { formatPrice } from "@/utils/format-price";
 import { ChangeEvent } from "react";
 import styled from "styled-components";
+import { DeleteIcon } from "../icons/Delete-icon";
 
 interface CartItemProps {
   product: ProductInCart,
-  handleUpdateQuantity(id: string, quantity: number): void  
+  handleUpdateQuantity(id: string, quantity: number): void,
+  handleDelete(id: string): void
 }
 
 const Item = styled.li`
@@ -16,6 +20,16 @@ const Item = styled.li`
   height: 210px;
   border-radius: 8px;
   background-color: white;
+  position: relative;
+  
+  button {
+    position: absolute;
+    top: 16px;
+    right: 24px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+  }
 
   img {
     max-height: 100%;
@@ -34,7 +48,6 @@ const Item = styled.li`
     line-height: 150%;
     color: var(--text-dark-2);
 
-
     h4 {
       font-weight: 300;
       font-size: 20px;
@@ -43,6 +56,9 @@ const Item = styled.li`
     p {
       font-weight: 400;
       font-size: 12px;
+      max-height: 50%;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     div {
@@ -70,12 +86,15 @@ const SelectQuantity = styled.select`
   font-size: 16px;
 `
 
-export function CartItem( { product, handleUpdateQuantity } : CartItemProps){
+export function CartItem( { product, handleUpdateQuantity, handleDelete } : CartItemProps){
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     handleUpdateQuantity(product.id, Number(e.target.value))
   }
   return(
     <Item>
+      <button  onClick={() => handleDelete(product.id)} aria-label="Delete">
+        <DeleteIcon />
+      </button>
       <img src={product.image_url} />
       <div>
         <h4>{product.name}</h4>
