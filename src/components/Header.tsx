@@ -51,7 +51,7 @@ export function Header(props: HeaderProps) {
   return (
     <TagHeader>
       <Logo className={sairaStencil.className} href="/">
-        Capputeeno 
+        Reward 
       </Logo>
       <div>
         <PrimaryInputWSearchIcon 
