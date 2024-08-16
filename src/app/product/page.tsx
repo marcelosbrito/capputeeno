@@ -6,6 +6,7 @@ import { ShopBagIcon } from "@/components/icons/Shopping-bag-icon"
 import { useProduct } from "@/hooks/useProduct"
 import { formatPrice } from "@/utils/format-price"
 import styled from "styled-components"
+import { useRouter } from "next/navigation";
 
 interface ProductProps {
 
@@ -102,7 +103,6 @@ const ProductInfo = styled.div`
         } 
       }
 `
-
 export default function Product({ searchParams }: { searchParams: { id: string } }){
   const { data } = useProduct(searchParams.id);
 
@@ -125,6 +125,17 @@ export default function Product({ searchParams }: { searchParams: { id: string }
     }
   }
 
+  const router = useRouter()
+
+  const handleNavigateToCart = () => {
+    router.push("/cart")
+  }
+
+  const handleCartRouter = () => {
+    handleAddToCart()
+    handleNavigateToCart()
+  }
+
   return(
     <DefaultPageLayout>
       <Container>
@@ -142,9 +153,9 @@ export default function Product({ searchParams }: { searchParams: { id: string }
                 <p>{data?.description}</p>
               </div>
             </ProductInfo>
-            <button onClick={handleAddToCart}>
-              <ShopBagIcon />
-              Add to Cart
+            <button onClick={handleCartRouter}>
+                <ShopBagIcon />
+                Add to Cart
             </button>
           </div>
         </section>
