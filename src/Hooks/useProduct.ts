@@ -2,29 +2,34 @@ import { ProductFetchResponse } from "@/types/product";
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosPromise } from "axios";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL as string
+const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
 const fetcher = (productId: string): AxiosPromise<ProductFetchResponse> => {
-  return axios.post(API_URL, { query: 
-    `query{
-      Product(id: "${productId}" ){
+  const query = `
+    query {
+      Product(id: "${productId}") {
+        id
         name
         description
         price_in_cents
         category
         image_url
       }
-}` })
+    }
+  `;
+  const url = `${API_URL}?query=${encodeURIComponent(query)}`;
+  return axios.get(url);
 }
 
-export function useProduct(id: string){
+export function useProduct(id: string) {
   const { data } = useQuery({
     queryFn: () => fetcher(id),
     queryKey: ['product', id],
     enabled: !!id,
-    staleTime: 1000 * 60 * 5
+    staleTime: 1000 * 60 * 5,
   });
-  return{
-    data: data?.data?.data?.Product
-  }
+
+  return {
+    data: data?.data?.data?.Product,
+  };
 }
