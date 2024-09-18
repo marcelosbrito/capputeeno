@@ -1,6 +1,6 @@
 import { FilterType } from "@/types/filter-types";
 import { PriorityTypes } from "@/types/priority-types";
-import { ProductFetchResponse } from "@/types/product";
+import { products } from "@/types/product";
 
 // Function to get the category by filter type
 export function getCategoryByType(type: FilterType) {
@@ -9,46 +9,30 @@ export function getCategoryByType(type: FilterType) {
   return "";  // No filter for ALL types
 }
 
-// Function to determine sorting settings by priority
-export function getFieldByPriority(priority: PriorityTypes) {
-  if (priority === PriorityTypes.NEWS) return { field: "created_at", order: "ASC" };
-  if (priority === PriorityTypes.BIGGEST_PRICE) return { field: "price_in_cents", order: "DESC" };
-  if (priority === PriorityTypes.MINOR_PRICE) return { field: "price_in_cents", order: "ASC" };
-  return { field: "sales", order: "DESC" };
-}
-
-// This function builds a GraphQL query, but now it fetches all products and applies filters client-side
-export const mountQuery = () => {
-  return `
-    query {
-      products {
-        id
-        name
-        price_in_cents
-        image_url
-        category
-        created_at
-        sales
-      }
-    }
-  `;
-};
-
-// Function to filter and sort products on the client side
+// Client-side filter and sort function
 export function filterAndSortProducts(
-  products: ProductFetchResponse["products"],
+  products: products[],
   type: FilterType,
-  priority: PriorityTypes
+  priority: PriorityTypes,
+  search: string
 ) {
   // Client-side filtering by category
   const categoryFilter = getCategoryByType(type);
   let filteredProducts = products;
+  console.log(categoryFilter)
 
   if (categoryFilter) {
     filteredProducts = filteredProducts.filter(product => product.category === categoryFilter);
   }
 
-  // Client-side sorting by priority
+  // Filter by search term (if provided)
+  if (search) {
+    filteredProducts = filteredProducts.filter(product =>
+      product.name.toLowerCase().includes(search.toLowerCase())
+    );
+  }
+
+  // Sort by priority (price, date, sales)
   const sortSettings = getFieldByPriority(priority);
   filteredProducts.sort((a, b) => {
     if (sortSettings.order === "ASC") {
@@ -59,4 +43,12 @@ export function filterAndSortProducts(
   });
 
   return filteredProducts;
+}
+
+// The priority sorting fields as determined by user selection
+function getFieldByPriority(priority: PriorityTypes) {
+  if (priority === PriorityTypes.NEWS) return { field: "created_at", order: "ASC" };
+  if (priority === PriorityTypes.BIGGEST_PRICE) return { field: "price_in_cents", order: "DESC" };
+  if (priority === PriorityTypes.MINOR_PRICE) return { field: "price_in_cents", order: "ASC" };
+  return { field: "sales", order: "DESC" }; // Default sorting by sales
 }

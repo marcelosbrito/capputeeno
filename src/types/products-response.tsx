@@ -1,7 +1,7 @@
-import { Product } from "./product"
+import { products } from "./product"
 
 export interface ProductsFetchResponse {
   data: {
-    products: Product[]
+    products: products[]
   }
 }
