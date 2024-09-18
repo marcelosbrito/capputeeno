@@ -1,4 +1,4 @@
-export interface Product {
+export interface products {
   name: string,
   price_in_cents: number,
   id: string,
@@ -8,12 +8,12 @@ export interface Product {
 }
 
 
-export interface ProductInCart extends Product {
+export interface ProductInCart extends products {
   quantity: number
 }
 
 export interface ProductFetchResponse {
   data: {
-    Product: Product
+    products: products
   }
 }

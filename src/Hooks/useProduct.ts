@@ -4,10 +4,10 @@ import axios, { AxiosPromise } from "axios";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
-const fetcher = (productId: string): AxiosPromise<ProductFetchResponse> => {
+const fetcher = (): AxiosPromise<ProductFetchResponse> => {
   const query = `
     query {
-      Product(id: "${productId}") {
+      products {
         id
         name
         description
@@ -18,18 +18,24 @@ const fetcher = (productId: string): AxiosPromise<ProductFetchResponse> => {
     }
   `;
   const url = `${API_URL}?query=${encodeURIComponent(query)}`;
+  console.log(url);
   return axios.get(url);
-}
+};
 
 export function useProduct(id: string) {
   const { data } = useQuery({
-    queryFn: () => fetcher(id),
-    queryKey: ['product', id],
+    queryFn: () => fetcher(),
+    queryKey: ['products'], 
     enabled: !!id,
     staleTime: 1000 * 60 * 5,
   });
 
+  // Filter the product by id in the client-side
+  const product = data?.data?.data?.products?.find(
+    (product) => product.id === id
+  );
+
   return {
-    data: data?.data?.data?.Product,
+    data: product,
   };
 }

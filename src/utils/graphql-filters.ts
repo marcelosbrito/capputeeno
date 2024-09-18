@@ -30,7 +30,7 @@ export const mountQuery = (type: FilterType, priority: PriorityTypes) => {
   const categoryFilter = getCategoryByType(type);
   return `
     query {
-      allProducts(sortField: "${sortSettings.field}", sortOrder: "${sortSettings.order}"${
+      products(sortField: "${sortSettings.field}", sortOrder: "${sortSettings.order}"${
     categoryFilter ? `, filter: { category: "${categoryFilter}" }` : ""
   }) {
         id

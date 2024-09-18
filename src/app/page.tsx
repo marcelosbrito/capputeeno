@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <DefaultPageLayout>
       <PageWrapper>
-        <FilterBar/>
+        {/* <FilterBar/> */}
         <ProductsList />
       </PageWrapper>
     </DefaultPageLayout>
