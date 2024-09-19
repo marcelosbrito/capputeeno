@@ -9,6 +9,14 @@ export function getCategoryByType(type: FilterType) {
   return "";  // No filter for ALL types
 }
 
+// The priority sorting fields as determined by user selection
+export function getFieldByPriority(priority: PriorityTypes): { field: keyof Product; order: "ASC" | "DESC" } {
+  if (priority === PriorityTypes.NEWS) return { field: "created_at", order: "ASC" };
+  if (priority === PriorityTypes.BIGGEST_PRICE) return { field: "price_in_cents", order: "DESC" };
+  if (priority === PriorityTypes.MINOR_PRICE) return { field: "price_in_cents", order: "ASC" };
+  return { field: "sales", order: "DESC" }; // Default is to sort by sales
+}
+
 // Client-side filter and sort function
 export function filterAndSortProducts(
   products: Product[],
@@ -35,20 +43,19 @@ export function filterAndSortProducts(
   // Sort by priority (price, date, sales)
   const sortSettings = getFieldByPriority(priority);
   filteredProducts.sort((a, b) => {
+    const aValue = a[sortSettings.field]; // Access using keyof Product
+    const bValue = b[sortSettings.field]; 
+    
+    if (aValue === undefined) return 1; // Push undefined values to the bottom
+    if (bValue === undefined) return -1; // Push undefined values to the bottom
+
     if (sortSettings.order === "ASC") {
-      return a[sortSettings.field] > b[sortSettings.field] ? 1 : -1;
+      return aValue > bValue ? 1 : -1;
     } else {
-      return a[sortSettings.field] < b[sortSettings.field] ? 1 : -1;
+      return aValue < bValue ? 1 : -1;
     }
   });
 
   return filteredProducts;
 }
 
-// The priority sorting fields as determined by user selection
-function getFieldByPriority(priority: PriorityTypes) {
-  if (priority === PriorityTypes.NEWS) return { field: "created_at", order: "ASC" };
-  if (priority === PriorityTypes.BIGGEST_PRICE) return { field: "price_in_cents", order: "DESC" };
-  if (priority === PriorityTypes.MINOR_PRICE) return { field: "price_in_cents", order: "ASC" };
-  return { field: "sales", order: "DESC" }; // Default sorting by sales
-}

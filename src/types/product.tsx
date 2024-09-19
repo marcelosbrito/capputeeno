@@ -4,7 +4,9 @@ export interface Product {
   id: string,
   image_url: string,
   description?: string,
-  category?: string
+  category?: string,
+  sales?: number,
+  created_at?: string,
 }
 
 

@@ -4,7 +4,7 @@ import axios, { AxiosPromise } from "axios";
 import { useFilter } from "./useFilter";
 import { mountQuery } from "@/utils/graphql-filters"; // The utility to generate the GraphQL query
 import { useDeferredValue } from "react";
-import { filterAndSortProducts } from "@/utils/client-side-filters"; // New utility for client-side filtering
+import { filterAndSortProducts } from "@/utils/client-side-filters";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
@@ -20,12 +20,12 @@ export function useProducts() {
   const searchDeferred = useDeferredValue(search); // Defer search input for performance optimization
 
   // Generate a query that fetches all products from the server
-  const query = mountQuery(); // Now we always fetch all products, no filters applied server-side
+  const query = mountQuery(); 
 
   // Fetch the data using react-query
   const { data } = useQuery({
     queryFn: () => fetcher(query),
-    queryKey: ['products'], // Key is just 'products' since we're fetching everything
+    queryKey: ['products'],
     staleTime: 1000 * 60 * 2,
   });
 
