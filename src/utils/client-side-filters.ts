@@ -1,6 +1,6 @@
 import { FilterType } from "@/types/filter-types";
 import { PriorityTypes } from "@/types/priority-types";
-import { products } from "@/types/product";
+import { Product } from "@/types/product";
 
 // Function to get the category by filter type
 export function getCategoryByType(type: FilterType) {
@@ -11,7 +11,7 @@ export function getCategoryByType(type: FilterType) {
 
 // Client-side filter and sort function
 export function filterAndSortProducts(
-  products: products[],
+  products: Product[],
   type: FilterType,
   priority: PriorityTypes,
   search: string
@@ -19,7 +19,7 @@ export function filterAndSortProducts(
   // Client-side filtering by category
   const categoryFilter = getCategoryByType(type);
   let filteredProducts = products;
-  console.log(categoryFilter)
+  
 
   if (categoryFilter) {
     filteredProducts = filteredProducts.filter(product => product.category === categoryFilter);

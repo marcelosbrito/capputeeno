@@ -37,13 +37,13 @@ export const mountQuery = () => {
 
 // Function to filter and sort products on the client side
 export function filterAndSortProducts(
-  products: ProductFetchResponse["products"],
+  products: ProductFetchResponse["data"],
   type: FilterType,
   priority: PriorityTypes
 ) {
   // Client-side filtering by category
   const categoryFilter = getCategoryByType(type);
-  let filteredProducts = products;
+  let filteredProducts = products?.products || [];
 
   if (categoryFilter) {
     filteredProducts = filteredProducts.filter(product => product.category === categoryFilter);

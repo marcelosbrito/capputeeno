@@ -4,7 +4,7 @@ import axios, { AxiosPromise } from "axios";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
-const fetcher = (): AxiosPromise<ProductFetchResponse> => {
+const fetcher = (productId: string): AxiosPromise<ProductFetchResponse> => {
   const query = `
     query {
       products {
@@ -18,20 +18,22 @@ const fetcher = (): AxiosPromise<ProductFetchResponse> => {
     }
   `;
   const url = `${API_URL}?query=${encodeURIComponent(query)}`;
-  console.log(url);
   return axios.get(url);
 };
 
 export function useProduct(id: string) {
   const { data } = useQuery({
-    queryFn: () => fetcher(),
-    queryKey: ['products'], 
+    queryFn: () => fetcher(id),
+    queryKey: ['product', id],
     enabled: !!id,
     staleTime: 1000 * 60 * 5,
   });
 
+  // Ensure that the products field is treated as an array
+  const allProducts = data?.data?.data?.products || [];
+  
   // Filter the product by id in the client-side
-  const product = data?.data?.data?.products?.find(
+  const product = allProducts.find(
     (product) => product.id === id
   );
 
