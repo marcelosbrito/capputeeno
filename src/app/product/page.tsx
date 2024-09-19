@@ -141,7 +141,9 @@ export default function Product({ searchParams }: { searchParams: { id: string }
       <Container>
         <BackBtn navigate="/" />
         <section>
-          <img src={data?.image_url} />
+          <picture>
+            <img src={data?.image_url} alt="Product picture." />
+          </picture>
           <div>
             <ProductInfo>
               <span>{data?.category}</span>
