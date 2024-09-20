@@ -4,7 +4,7 @@ import { BackBtn } from "@/components/Back-button";
 import { DefaultPageLayout } from "@/components/Default-page-layout";
 import { Divider } from "@/components/Divider";
 import { CartItem } from "@/components/cart/Cart-item";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { ProductInCart } from "@/types/product";
 import { formatPrice } from "@/utils/format-price";
 import { styled } from "styled-components";
