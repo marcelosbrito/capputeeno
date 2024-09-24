@@ -1,6 +1,6 @@
 # 🧠 About
 
-Welcome! This respostitory contains my code to an e-commerce for the sale of mugs and t-shirts.
+Welcome! This respostitory contains my code to an [e-commerce for the sale of mugs and t-shirts](https://reward-store-gamma.vercel.app/).
 
 ![Prototype](https://github.com/marcelosbrito/portfolio/blob/main/src/assets/reward-store.png?raw=true)
 
@@ -17,6 +17,10 @@ The project should have the following functionalities:
 - Use Next.js and Typescript
 - Create components with styled-components
 - consume from **GraphQL API**
+
+## 🔗 Live Access
+
+https://reward-store-gamma.vercel.app/
 
 ## 🖥️ Installation
 
